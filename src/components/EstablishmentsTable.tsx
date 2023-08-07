@@ -18,7 +18,7 @@ export const EstablishmentsTable: React.FC<{
           <th style={headerStyle}>Business Name</th>
           <th style={headerStyle}>Rating Value</th>
         </tr>
-        {establishments &&
+        {establishments && establishments.length !== 0 ? (
           establishments?.map(
             (
               establishment: { [key: string]: string } | null | undefined,
@@ -29,7 +29,12 @@ export const EstablishmentsTable: React.FC<{
                 establishment={establishment}
               />
             )
-          )}
+          )
+        ) : (
+          <tr>
+            <td>Loading...</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

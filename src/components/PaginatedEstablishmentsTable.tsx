@@ -12,8 +12,10 @@ const tableStyle = {
 };
 
 export const PaginatedEstablishmentsTable = () => {
-  const [error, setError] =
-    useState<{ message: string; [key: string]: string }>();
+  const [error, setError] = useState<{
+    message: string;
+    [key: string]: string;
+  }>();
   const [establishments, setEstablishments] = useState<
     { [key: string]: string }[]
   >([]);
@@ -32,8 +34,13 @@ export const PaginatedEstablishmentsTable = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const resetEstablishment = () => {
+    setEstablishments([]);
+  };
+
   async function handlePreviousPage() {
     pageNum > 1 && setPageNum(pageNum - 1);
+    resetEstablishment();
     getEstablishmentRatings(pageNum).then(
       (result) => {
         setEstablishments(result.establishments);
@@ -46,6 +53,7 @@ export const PaginatedEstablishmentsTable = () => {
 
   async function handleNextPage() {
     pageNum < pageCount && setPageNum(pageNum + 1);
+    resetEstablishment();
     getEstablishmentRatings(pageNum).then(
       (result) => {
         setEstablishments(result.establishments);
@@ -56,6 +64,7 @@ export const PaginatedEstablishmentsTable = () => {
     );
   }
 
+  console.log(establishments);
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
