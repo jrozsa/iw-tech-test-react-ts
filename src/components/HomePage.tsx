@@ -1,5 +1,7 @@
 import { PaginatedEstablishmentsTable } from "./PaginatedEstablishmentsTable";
 import Background from "../static/logo.svg";
+import { useState } from "react";
+import { AuthoritiesDropdown } from "./AuthoritiesDropdown";
 
 const logoStyle: { [key: string]: string | number } = {
   width: "640px",
@@ -8,11 +10,21 @@ const logoStyle: { [key: string]: string | number } = {
   margin: "20px auto",
 };
 
+const wrapperStyle = {
+  marginLeft: "50px",
+};
+
 const HomePage = () => {
+  const [authorityId, setAuthorityId] = useState<string | undefined>(undefined);
+
   return (
-    <div>
+    <div style={wrapperStyle}>
       <header style={logoStyle} />
-      <PaginatedEstablishmentsTable />
+      <AuthoritiesDropdown
+        authorityId={authorityId}
+        setAuthorityId={setAuthorityId}
+      />
+      <PaginatedEstablishmentsTable authorityId={authorityId} />
     </div>
   );
 };

@@ -7,11 +7,14 @@ const tableStyle = {
   background: "rgba(51, 51, 51, 0.9)",
   padding: "10px",
   width: "max-content",
-  marginLeft: "50px",
   color: "white",
 };
 
-export const PaginatedEstablishmentsTable = () => {
+type Props = {
+  authorityId?: string;
+};
+
+export const PaginatedEstablishmentsTable = ({ authorityId }: Props) => {
   const [error, setError] = useState<{
     message: string;
     [key: string]: string;
@@ -22,8 +25,13 @@ export const PaginatedEstablishmentsTable = () => {
   const [pageNum, setPageNum] = useState(1);
   const [pageCount] = useState(100);
 
+  const resetEstablishments = () => {
+    setEstablishments([]);
+  };
+
   useEffect(() => {
-    getEstablishmentRatings(pageNum).then(
+    resetEstablishments();
+    getEstablishmentRatings(pageNum, authorityId).then(
       (result) => {
         setEstablishments(result?.establishments);
       },
@@ -31,17 +39,12 @@ export const PaginatedEstablishmentsTable = () => {
         setError(error);
       }
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const resetEstablishment = () => {
-    setEstablishments([]);
-  };
+  }, [authorityId, pageNum]);
 
   async function handlePreviousPage() {
     pageNum > 1 && setPageNum(pageNum - 1);
-    resetEstablishment();
-    getEstablishmentRatings(pageNum).then(
+    resetEstablishments();
+    getEstablishmentRatings(pageNum, authorityId).then(
       (result) => {
         setEstablishments(result.establishments);
       },
@@ -53,8 +56,8 @@ export const PaginatedEstablishmentsTable = () => {
 
   async function handleNextPage() {
     pageNum < pageCount && setPageNum(pageNum + 1);
-    resetEstablishment();
-    getEstablishmentRatings(pageNum).then(
+    resetEstablishments();
+    getEstablishmentRatings(pageNum, authorityId).then(
       (result) => {
         setEstablishments(result.establishments);
       },
@@ -64,7 +67,6 @@ export const PaginatedEstablishmentsTable = () => {
     );
   }
 
-  console.log(establishments);
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
