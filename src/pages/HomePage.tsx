@@ -1,7 +1,7 @@
-import { PaginatedEstablishmentsTable } from "./PaginatedEstablishmentsTable";
+import { PaginatedEstablishmentsTable } from "../components/PaginatedEstablishmentsTable";
 import Background from "../static/logo.svg";
 import { useState } from "react";
-import { AuthoritiesDropdown } from "./AuthoritiesDropdown";
+import { AuthoritiesDropdown } from "../components/AuthoritiesDropdown";
 
 const logoStyle: { [key: string]: string | number } = {
   width: "640px",

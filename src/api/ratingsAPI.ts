@@ -38,6 +38,17 @@ export type AuthoritiesType = {
   ];
 };
 
+export type EstablishmentType = {
+  FHRSID: string;
+  AddressLine1: string;
+  AddressLine2: string;
+  AddressLine3: string;
+  AddressLine4: string;
+  PostCode: string;
+  RatingValue: string;
+  RatingDate: string;
+};
+
 export function getEstablishmentRatings(
   pageNum: number,
   authorityId?: string
@@ -50,6 +61,12 @@ export function getEstablishmentRatings(
 
 export function getAuthorities(): Promise<AuthoritiesType> {
   return fetch(`http://api.ratings.food.gov.uk/Authorities/basic/`, {
+    headers: { "x-api-version": "2" },
+  }).then((res) => res.json());
+}
+
+export function getEstablishment(id: string): Promise<EstablishmentType> {
+  return fetch(`http://api.ratings.food.gov.uk/Establishments/${id}`, {
     headers: { "x-api-version": "2" },
   }).then((res) => res.json());
 }
