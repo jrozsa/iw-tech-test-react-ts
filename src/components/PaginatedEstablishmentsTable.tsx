@@ -39,7 +39,8 @@ export const PaginatedEstablishmentsTable = ({ authorityId }: Props) => {
         setError(error);
       }
     );
-  }, [authorityId, pageNum]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authorityId]);
 
   async function handlePreviousPage() {
     pageNum > 1 && setPageNum(pageNum - 1);
